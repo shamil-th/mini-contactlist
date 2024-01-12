@@ -1,0 +1,36 @@
+.content {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #edf1fa;
+    display: flex;
+    margin: auto;
+    padding: 20px 0;
+  }
+  
+  .table_section {
+    width: 100%;
+  }
+  
+  .content_body {
+    display: flex;
+    width: 100%;
+    min-height: 100%;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .forms {
+    min-width: 0%;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 1500ms, visibility 2000ms , min-width 600ms;
+  }
+  
+  .formsVisible {
+    visibility: visible;
+    min-width: 35%;
+    opacity: 1;
+    overflow: hidden;
+    transition: opacity 1500ms, visibility 2000ms , min-width 600ms;
+
+  }

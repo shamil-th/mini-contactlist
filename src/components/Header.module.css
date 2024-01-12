@@ -1,0 +1,15 @@
+.header{
+    width: 100%;
+    background-color: rgb(196, 95, 95);
+}
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.navbar ul{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+}
