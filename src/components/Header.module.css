@@ -1,6 +1,7 @@
 .header{
     width: 100%;
-    background-color: rgb(196, 95, 95);
+    background-color: var(--primary-color);
+    color: white;
 }
 .navbar{
     display: flex;

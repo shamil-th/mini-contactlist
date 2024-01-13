@@ -28,24 +28,27 @@ export const addContact = createAsyncThunk('contacts/addContact', async (contact
 
 export const getContacts = createAsyncThunk('contacts/getContacts', async (data) => {
 
-    const { pagenum, searchValue} = data;
+    const { currentPage, searchValue } = data;
     const itemsPerPage = 4;
 
     try {
-        const response = await axios.get(`http://localhost:4000/contact?page=${pagenum}&size=${itemsPerPage}&search=${searchValue}`);
+        const response = await axios.get(`http://localhost:4000/contact?page=${currentPage}&size=${itemsPerPage}&search=${searchValue}`);
         if (!response.data.contacts) {
             throw new Error("failed to retrive contacts");
         }
-        console.log( response);
-
         const { contacts, contactsCount } = response.data;
 
-        //  totalCount of data
-        console.log(contactsCount[0].totalCount);
-        let totalContacts = contactsCount[0].totalCount;
-        console.log("total",totalContacts);
+        let totalContacts;
 
-        return contacts;
+        if (contacts.length === 0) {
+            totalContacts = 0;
+        }
+        else {
+            totalContacts = contactsCount[0].totalCount;
+        }
+        const data = { contacts, totalContacts }
+
+        return data;
 
     } catch (error) {
         throw new Error('failed to retrive contacts')
@@ -70,8 +73,9 @@ export const deleteContact = createAsyncThunk('contacts/deleteContact', async (i
         if (!response.data) {
             throw new Error("failed to delete contact");
         }
-        getContacts();
-        return response.data;
+        console.log("deleted", response.data)
+        return id;
+
     } catch (error) {
         throw new Error('failed to delete contacts');
     }
@@ -104,14 +108,16 @@ export const editContact = createAsyncThunk('contacts/editContact', async (data)
 
 const initialState = {
     contacts: [],
+    contactsCount: "",
     contact: [],
-    searchValue:[""],
-    pagenum:[1],
+    searchValue: [""],
+    currentPage: 1,
     status: 'idle',
     error: null,
     formView: false,
     isAddContact: false,
     isGetContact: false,
+    alert: false,
 };
 
 const contactsSlice = createSlice({
@@ -127,24 +133,29 @@ const contactsSlice = createSlice({
         setIsGetContact: (state, action) => {
             state.isGetContact = action.payload;
         },
-        setSearchValue:(state,action) => {
+        setSearchValue: (state, action) => {
             state.searchValue = action.payload;
         },
-        setPagenum:(state,action) => {
-            state.pagenum = action.payload;
+        setCurrentPage: (state, action) => {
+            state.currentPage = action.payload;
+        },
+        setAlert: (state, action) => {
+            state.alert = action.payload;
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(addContact.fulfilled, (state, action) => {
-                state.contacts.push(action.payload)
+            .addCase(addContact.fulfilled, (state) => {
+                state.status = "succeeded";
+                // state.contacts.push(action.payload)
             })
-            .addCase(getContacts.pending, (state) => {
-                state.status = 'loading';
-            })
+            // .addCase(getContacts.pending, (state) => {
+            //     state.status = 'loading';
+            // })
             .addCase(getContacts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.contacts = action.payload;
+                state.contacts = action.payload.contacts;
+                state.contactsCount = action.payload.totalContacts;
             })
             .addCase(getContacts.rejected, (state, action) => {
                 state.status = 'failed';
@@ -152,7 +163,7 @@ const contactsSlice = createSlice({
             })
             .addCase(deleteContact.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.contacts = state.contacts.filter((contact) => contact._id !== action.payload);
+                // state.contacts = state.contacts.filter((contact) => contact._id !== action.payload);
             })
             .addCase(deleteContact.rejected, (state, action) => {
                 state.status = 'failed';
@@ -191,6 +202,6 @@ const contactsSlice = createSlice({
     },
 });
 
-export const { setFormView, setIsAddContact, setIsGetContact, setSearchValue, setPagenum } = contactsSlice.actions;
+export const { setFormView, setIsAddContact, setIsGetContact, setSearchValue, setCurrentPage, setAlert } = contactsSlice.actions;
 // export const {  } = contactsSlice.actions;
 export default contactsSlice.reducer;

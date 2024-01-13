@@ -9,39 +9,41 @@ const ContactTable = () => {
   const contacts = useSelector((state) => state.contacts.contacts);
   const status = useSelector((state) => state.contacts.status);
   const error = useSelector((state) => state.contacts.error);
-  const pagenum = useSelector((state) => state.contacts.pagenum)
-  const searchValue = useSelector((state) => state.contacts.searchValue)
+  const currentPage = useSelector((state) => state.contacts.currentPage);
+  const searchValue = useSelector((state) => state.contacts.searchValue);
 
   useEffect(() => {
-    const params={
-      pagenum,
+    const params = {
+      currentPage,
       searchValue
-    }
+    };
     dispatch(getContacts(params));
-  }, [dispatch,pagenum,searchValue]);
+  }, [dispatch, currentPage, searchValue]);
 
   return (
-    <div className={TableCss.contact_table}><table>
-      <tbody>
-        <tr>
-          <th className={TableCss.sl}>sl no</th>
-          <th>Name</th>
-          <th>Number</th>
-          <th>Mail</th>
-        </tr>
-        {status === 'loading' && <tr><td colSpan="4">Loading...</td></tr>}
-        {status === 'failed' && <tr> <td colSpan="4">Error: {error}</td></tr>}
-        {status === 'succeeded' && contacts && contacts.length > 0 && (
-          <>
-            {contacts.map((contact, index) => (
+    <div className={TableCss.contact_table}>
+      <table>
+        {/* <thead>
+          <tr>
+            <th className={TableCss.sl}>sl no</th>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Mail</th>
+          </tr>
+        </thead> */}
+        <tbody>
+          {/* {status === 'loading' && <tr><td colSpan="4">Loading...</td></tr>} */}
+          {status === 'failed' && <tr><td colSpan="4">Error: {error}</td></tr>}
+          {status === 'succeeded' && contacts && contacts.length > 0 &&
+            contacts.map((contact, index) => (
               <TableRow key={contact._id} contact={contact} index={index} />
-            ))}
-          </>
-        )}
-      </tbody>
-    </table>
+            ))
+          }
+        </tbody>
+      </table>
+      {/* {contacts.length === 0 && (<>No Data Found</>)} */}
     </div>
-  )
-}
+  );
+};
 
-export default ContactTable
+export default ContactTable;

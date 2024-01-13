@@ -16,14 +16,14 @@ const Content = () => {
         <div className={ContentCss.content_body}>
           <div className={ContentCss.table_section}>
             <SearchSection />
-            <ContactTable />
-            <Pagination/>
-          </div>
-        
-            <div className={!formView ? ContentCss.forms :ContentCss.formsVisible}>
-              <Forms />
+            <div className='table_and_pagination'>
+              <ContactTable />
+              <Pagination />
             </div>
-       
+          </div>
+          <div className={!formView ? ContentCss.forms : ContentCss.formsVisible}>
+            <Forms />
+          </div>
         </div>
       </div>
     </div>
