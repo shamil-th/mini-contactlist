@@ -77,3 +77,9 @@ text-align: center;
 .contact_table td{
     text-align: center;
 }
+
+.confirmation{
+    padding: 5px;
+    margin-left: 5px;
+    border-radius: 3px;
+}

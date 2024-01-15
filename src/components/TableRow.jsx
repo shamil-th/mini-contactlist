@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TableCss from './Table.module.css';
 import { deleteContact, getContactbyId, getContacts, setAlertText } from '../features/todo/contactsSlice';
 import { setIsGetContact, setFormView, setIsAddContact, setAlert } from '../features/todo/contactsSlice';
 
 const TableRow = ({ contact, index }) => {
+
+    const [toggle,setToggle] = useState(false)
 
     const dispatch = useDispatch();
     const currentPage = useSelector((state) => state.contacts.currentPage);
@@ -38,12 +40,14 @@ const TableRow = ({ contact, index }) => {
 
     return (
         <tr className={TableCss.table_row}>
-            <td className={TableCss.cell}>{index + slNo}</td>
-            <td className={`${TableCss.username} ${TableCss.cell}`}><img src={`http://localhost:4000/${contact.avatar}`} alt="user" className={TableCss.img} /> {contact.firstName} {contact.lastName}</td>
-            <td className={TableCss.cell}>{contact.phone}</td>
-            <td className={TableCss.cell}>{contact.email}</td>
-            <td className={`${TableCss.buttons}  ${TableCss.cell}`}><button className={TableCss.edit} onClick={() => viewDetails(contact._id)}><i className="fa-regular fa-pen-to-square"></i></button>
-                <button className={TableCss.delete} onClick={() => removeContact(contact._id)}><i className="fa-regular fa-trash-can"></i></button></td>
+            <td>{index + slNo}</td>
+            <td className={TableCss.username}><img src={`http://localhost:4000/${contact.avatar}`} alt="user" className={TableCss.img} /> {contact.firstName} {contact.lastName}</td>
+            <td>{contact.phone}</td>
+            <td>{contact.email}</td>
+            {!toggle? <td className={TableCss.buttons}><button className={TableCss.edit} onClick={() => viewDetails(contact._id)}><i className="fa-regular fa-pen-to-square"></i></button>
+                <button className={TableCss.delete} onClick={()=>setToggle(true)}><i className="fa-regular fa-trash-can"></i></button>
+                </td>:
+                <td className={TableCss.confirm_cell}>Are you sure<button  className={`${TableCss.delete} ${TableCss.confirmation}`} onClick={() => removeContact(contact._id)}>Yes</button><button className={`${TableCss.edit} ${TableCss.confirmation}`} onClick={()=>setToggle(false)}>No</button></td>}
         </tr>
     )
 }

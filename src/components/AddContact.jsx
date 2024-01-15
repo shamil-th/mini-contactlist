@@ -102,7 +102,7 @@ const AddContact = () => {
                 <button className={ContactCss.close} onClick={hideForm}><i className="fa-solid fa-xmark"></i></button>
             </div>
             <div className={ContactCss.preview}>
-            <div className={ContactCss.addImg}><i className="fa-solid fa-plus"></i></div>
+                <div className={ContactCss.addImg}><i className="fa-solid fa-plus"></i></div>
 
                 <img src={previewImg} alt="user" />
                 <input type="file" ref={imageRef} id='image' onChange={preview} />
