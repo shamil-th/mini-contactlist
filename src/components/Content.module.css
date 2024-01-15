@@ -33,7 +33,7 @@
     visibility: visible;
     min-width: 40%;
     opacity: 1;
-    overflow: hidden;
+    /* overflow: hidden; */
     transition: opacity 1500ms, visibility 2000ms , min-width 600ms;
 
   }

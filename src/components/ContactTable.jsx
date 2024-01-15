@@ -23,14 +23,15 @@ const ContactTable = () => {
   return (
     <div className={TableCss.contact_table}>
       <table>
-        {/* <thead>
+        <thead className={TableCss.header}>
           <tr>
-            <th className={TableCss.sl}>sl no</th>
+            <th className={TableCss.sl}>Sl No</th>
             <th>Name</th>
             <th>Number</th>
             <th>Mail</th>
+            <th></th>
           </tr>
-        </thead> */}
+        </thead>
         <tbody>
           {/* {status === 'loading' && <tr><td colSpan="4">Loading...</td></tr>} */}
           {status === 'failed' && <tr><td colSpan="4">Error: {error}</td></tr>}
@@ -41,7 +42,7 @@ const ContactTable = () => {
           }
         </tbody>
       </table>
-      {/* {contacts.length === 0 && (<>No Data Found</>)} */}
+      {contacts.length === 0 && (<>No Data Found</>)}
     </div>
   );
 };

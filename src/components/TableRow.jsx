@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TableCss from './Table.module.css';
-import { deleteContact, getContactbyId, getContacts } from '../features/todo/contactsSlice';
-import { setIsGetContact, setFormView, setIsAddContact } from '../features/todo/contactsSlice';
+import { deleteContact, getContactbyId, getContacts, setAlertText } from '../features/todo/contactsSlice';
+import { setIsGetContact, setFormView, setIsAddContact, setAlert } from '../features/todo/contactsSlice';
 
 const TableRow = ({ contact, index }) => {
 
@@ -17,8 +17,14 @@ const TableRow = ({ contact, index }) => {
             currentPage,
             searchValue
         }
+        const message = {
+            text: "Contact Deleted Successfully",
+            class: "delete"
+        }
         await dispatch(deleteContact(id));
         dispatch(getContacts(params));
+        dispatch((setAlertText(message)));
+        dispatch(setAlert(true))
     }
 
     const viewDetails = async (id) => {

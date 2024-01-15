@@ -2,7 +2,6 @@ import React from 'react';
 import SearchCss from './SearchSection.module.css'
 import { useDispatch } from 'react-redux';
 import { setIsAddContact, setFormView, setIsGetContact, setSearchValue, setCurrentPage } from '../features/todo/contactsSlice';
-import Alert from './Alert';
 
 const SearchSection = () => {
   const dispatch = useDispatch();
@@ -14,6 +13,7 @@ const SearchSection = () => {
   }
   const search = (e) => {
     dispatch(setSearchValue(e.target.value));
+    console.log(e.target.value)
     dispatch(setCurrentPage(1));
   }
 
@@ -26,7 +26,6 @@ const SearchSection = () => {
         <input type="text" placeholder='search' onChange={(e) => search(e)} />
         </div>
         <div><button onClick={addContact}><i className="fa-solid fa-user-plus"></i></button></div> 
-        <Alert/>  
       </div>
     </div>
   )

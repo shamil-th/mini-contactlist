@@ -7,10 +7,10 @@ const Forms = () => {
   const isAddContact = useSelector((state)=>state.contacts.isAddContact);
   const isGetContact = useSelector((state)=>state.contacts.isGetContact);
   return (
-    <div>
+    <>
         { isAddContact && <AddContact/>}
         { isGetContact && <GetContact/>}
-    </div>
+    </>
   )
 }
 

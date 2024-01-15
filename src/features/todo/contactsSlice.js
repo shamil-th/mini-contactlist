@@ -1,10 +1,7 @@
-// import { useState } from "react";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const addContact = createAsyncThunk('contacts/addContact', async (contact) => {
-
-    console.log(contact.firstName)
 
     const formData = new FormData();
     formData.append('firstName', contact.firstName);
@@ -73,8 +70,7 @@ export const deleteContact = createAsyncThunk('contacts/deleteContact', async (i
         if (!response.data) {
             throw new Error("failed to delete contact");
         }
-        console.log("deleted", response.data)
-        return id;
+        return response.data;
 
     } catch (error) {
         throw new Error('failed to delete contacts');
@@ -98,7 +94,7 @@ export const editContact = createAsyncThunk('contacts/editContact', async (data)
         if (!response.data) {
             throw new Error("filed to edit contact");
         }
-
+console.log(response.data)
         return { id, data: response.data };
 
     } catch (error) {
@@ -118,6 +114,7 @@ const initialState = {
     isAddContact: false,
     isGetContact: false,
     alert: false,
+    alertText:[],
 };
 
 const contactsSlice = createSlice({
@@ -141,17 +138,16 @@ const contactsSlice = createSlice({
         },
         setAlert: (state, action) => {
             state.alert = action.payload;
+        },
+        setAlertText: (state, action) => {
+            state.alertText = action.payload;
         }
     },
     extraReducers: (builder) => {
         builder
             .addCase(addContact.fulfilled, (state) => {
                 state.status = "succeeded";
-                // state.contacts.push(action.payload)
             })
-            // .addCase(getContacts.pending, (state) => {
-            //     state.status = 'loading';
-            // })
             .addCase(getContacts.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.contacts = action.payload.contacts;
@@ -163,7 +159,6 @@ const contactsSlice = createSlice({
             })
             .addCase(deleteContact.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                // state.contacts = state.contacts.filter((contact) => contact._id !== action.payload);
             })
             .addCase(deleteContact.rejected, (state, action) => {
                 state.status = 'failed';
@@ -183,17 +178,8 @@ const contactsSlice = createSlice({
             .addCase(editContact.pending, (state) => {
                 state.status = 'loading';
             })
-            // .addCase(editContact.fulfilled, (state, action) => {
-            //     state.status = 'succeeded';
-            //     state.contacts = action.payload;
-            //     console.log("suceeded")
-            // })
-            .addCase(editContact.fulfilled, (state, action) => {
-                const { id, data } = action.payload;
+            .addCase(editContact.fulfilled, (state) => {
                 state.status = 'succeeded';
-                state.contacts = state.contacts.map((contact) =>
-                    contact._id === id ? { ...contact, ...data } : contact
-                );
             })
             .addCase(editContact.rejected, (action, state) => {
                 state.status = 'failed';
@@ -202,6 +188,5 @@ const contactsSlice = createSlice({
     },
 });
 
-export const { setFormView, setIsAddContact, setIsGetContact, setSearchValue, setCurrentPage, setAlert } = contactsSlice.actions;
-// export const {  } = contactsSlice.actions;
+export const { setFormView, setIsAddContact, setIsGetContact, setSearchValue, setCurrentPage, setAlert, setAlertText } = contactsSlice.actions;
 export default contactsSlice.reducer;
