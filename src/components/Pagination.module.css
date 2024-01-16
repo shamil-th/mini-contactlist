@@ -5,7 +5,11 @@
     margin-top: 30px;
 }
 
-.pagination button {
+.pagination button:hover{
+    background-color: #595e6d;
+}
+.numbers{
+    font-size: 16px;
     color: white;
     background-color: var(--primary-color);
     /* font-size: 14px; */
@@ -13,11 +17,17 @@
     border: none;
     border-radius: 2px;
 }
-.pagination button:hover{
-    background-color: #595e6d;
+.numbers i{
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
-.numbers{
-    font-size: 16px;
+.current{
+    font-size: 17px;
+    background-color: rgb(29, 29, 29);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .fa-chevron-left{
     font-size: 8px;

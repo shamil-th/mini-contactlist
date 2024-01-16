@@ -10,13 +10,15 @@ const TableRow = ({ contact, index }) => {
 
     const dispatch = useDispatch();
     const currentPage = useSelector((state) => state.contacts.currentPage);
+    const itemsPerPage = useSelector((state) => state.contacts.itemsPerPage);
     const searchValue = useSelector((state) => state.contacts.searchValue)
 
-    let slNo = ((currentPage - 1) * 4) + 1
+    let slNo = ((currentPage - 1) * itemsPerPage) + 1
 
     const removeContact = async (id) => {
         const params = {
             currentPage,
+            itemsPerPage,
             searchValue
         }
         const message = {
@@ -30,6 +32,7 @@ const TableRow = ({ contact, index }) => {
     }
 
     const viewDetails = async (id) => {
+        dispatch(setIsGetContact(false));
 
         await dispatch(getContactbyId(id));
         dispatch(setIsAddContact(false))

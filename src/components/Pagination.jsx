@@ -7,10 +7,11 @@ const Pagination = () => {
   const contactsCount = useSelector((state) => state.contacts.contactsCount)
   const currentPageNumber = useSelector((state) => state.contacts.currentPage)
   const searchValue = useSelector((state) => state.contacts.searchValue)
+  const itemsPerPage = useSelector((state) => state.contacts.itemsPerPage)
 
   const dispatch = useDispatch();
 
-  const page = Math.ceil(contactsCount / 4);
+  const page = Math.ceil(contactsCount / itemsPerPage);
 
   const pagenumbers = [];
 
@@ -27,6 +28,7 @@ const Pagination = () => {
     const currentPage = currentPageNumber + 1;
     const params = {
       currentPage,
+      itemsPerPage,
       searchValue
     }
     dispatch(getContacts(params));
@@ -38,6 +40,7 @@ const Pagination = () => {
     const currentPage = currentPageNumber-1;
     const params = {
       currentPage,
+      itemsPerPage,
       searchValue
     }
     dispatch(getContacts(params));
@@ -48,6 +51,7 @@ const Pagination = () => {
 
     const params = {
       currentPage,
+      itemsPerPage,
       searchValue
     }
     dispatch(getContacts(params));
@@ -57,12 +61,12 @@ const Pagination = () => {
   return (
     <div className={PaginationCss.pagination}>
 
-      { currentPageNumber > 1 && <button onClick={previousPage}><i className="fa-solid fa-chevron-left"></i></button>}
+      { currentPageNumber > 1 && <button className={PaginationCss.numbers} onClick={previousPage}><i className="fa-solid fa-chevron-left"></i></button>}
 
       {pagenumbers.map((page) => {
-        return <button className={PaginationCss.numbers} key={page} onClick={() => selectPage(page)}>{page}</button>
+        return <button  className={`${PaginationCss.numbers} ${currentPageNumber === page ? PaginationCss.current : ''}`} key={page} onClick={() => selectPage(page)}>{page}</button>
       })}
-      { currentPageNumber < page && <button onClick={() => nextPage()}><i className="fa-solid fa-chevron-right"></i></button>}
+      { currentPageNumber < page && <button className={PaginationCss.numbers} onClick={() => nextPage()}><i className="fa-solid fa-chevron-right"></i></button>}
 
     </div>
   )

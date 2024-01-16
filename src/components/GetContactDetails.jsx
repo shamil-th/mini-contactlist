@@ -9,6 +9,7 @@ const GetContactDetails = ({ contact }) => {
     const dispatch = useDispatch();
 
     const currentPage = useSelector((state) => state.contacts.currentPage);
+    const itemsPerPage = useSelector((state) => state.contacts.itemsPerPage);
     const searchValue = useSelector((state) => state.contacts.searchValue);
     const [firstName, setFirstName] = useState(contact.firstName);
     const [lastName, setLastName] = useState(contact.lastName);
@@ -61,6 +62,7 @@ const GetContactDetails = ({ contact }) => {
 
         const params = {
             currentPage,
+            itemsPerPage,
             searchValue
         }
 

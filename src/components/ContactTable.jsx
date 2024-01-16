@@ -10,15 +10,17 @@ const ContactTable = () => {
   const status = useSelector((state) => state.contacts.status);
   const error = useSelector((state) => state.contacts.error);
   const currentPage = useSelector((state) => state.contacts.currentPage);
+  const itemsPerPage = useSelector((state) => state.contacts.itemsPerPage);
   const searchValue = useSelector((state) => state.contacts.searchValue);
 
   useEffect(() => {
     const params = {
       currentPage,
+      itemsPerPage,
       searchValue
     };
     dispatch(getContacts(params));
-  }, [dispatch, currentPage, searchValue]);
+  }, [dispatch, currentPage, searchValue,itemsPerPage]);
 
   return (
     <div className={TableCss.contact_table}>

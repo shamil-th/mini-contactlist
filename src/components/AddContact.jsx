@@ -16,6 +16,7 @@ const AddContact = () => {
     const [previewImg, setPreviewImg] = useState(previewUrl);
 
     const currentPage = useSelector((state) => state.contacts.currentPage);
+    const itemsPerPage = useSelector((state) => state.contacts.itemsPerPage);
     const searchValue = useSelector((state) => state.contacts.searchValue);
 
     function validation() {
@@ -62,6 +63,7 @@ const AddContact = () => {
 
         const params = {
             currentPage,
+            itemsPerPage,
             searchValue
         };
         const message = {

@@ -25,8 +25,8 @@ export const addContact = createAsyncThunk('contacts/addContact', async (contact
 
 export const getContacts = createAsyncThunk('contacts/getContacts', async (data) => {
 
-    const { currentPage, searchValue } = data;
-    const itemsPerPage = 4;
+    const { currentPage, searchValue, itemsPerPage } = data;
+    // const itemsPerPages = 4;
 
     try {
         const response = await axios.get(`http://localhost:4000/contact?page=${currentPage}&size=${itemsPerPage}&search=${searchValue}`);
@@ -108,6 +108,7 @@ const initialState = {
     contact: [],
     searchValue: [""],
     currentPage: 1,
+    itemsPerPage:4,
     status: 'idle',
     error: null,
     formView: false,
@@ -136,6 +137,9 @@ const contactsSlice = createSlice({
         setCurrentPage: (state, action) => {
             state.currentPage = action.payload;
         },
+        setItemsPerPage: (state,action) => {
+            state.itemsPerPage = action.payload;
+        },
         setAlert: (state, action) => {
             state.alert = action.payload;
         },
@@ -163,9 +167,6 @@ const contactsSlice = createSlice({
             .addCase(deleteContact.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
-            })
-            .addCase(getContactbyId.pending, (state) => {
-                state.status = 'pending';
             })
             .addCase(getContactbyId.fulfilled, (state, action) => {
                 state.status = 'succeeded';
