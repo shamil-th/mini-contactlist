@@ -92,7 +92,7 @@ export const editContact = createAsyncThunk('contacts/editContact', async (data)
         const response = await axios.put(`http://localhost:4000/contact/${id}`, formData)
 
         if (!response.data) {
-            throw new Error("filed to edit contact");
+            throw new Error("failed to edit contact");
         }
 console.log(response.data)
         return { id, data: response.data };

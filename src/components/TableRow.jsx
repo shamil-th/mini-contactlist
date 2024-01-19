@@ -33,7 +33,6 @@ const TableRow = ({ contact, index }) => {
 
     const viewDetails = async (id) => {
         dispatch(setIsGetContact(false));
-
         await dispatch(getContactbyId(id));
         dispatch(setIsAddContact(false))
         dispatch(setFormView(true))
